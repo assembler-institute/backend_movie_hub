@@ -5,7 +5,7 @@ Welcome to the MovieHub project, an application to keep track of the movies you 
 
 ![homepage_desktop.png](assets%2Fhomepage_desktop.png)
 
-Table of Contents:
+## Table of Contents:
 - [📋 Project Description](#-project-description)
 - [🗄️ Data Model](#-data-model)
    - [👤 Users](#-users)
@@ -13,14 +13,13 @@ Table of Contents:
    - [🏷️ Genres](#-genres)
 - [🚀 Phase 1: Backend with Express, TypeScript, and Node.js](#-phase-1-backend-with-express-typescript-and-nodejs)
 - [🏗️ Phase 2: MVC Structure and MongoDB with Mongoose](#-phase-2-mvc-structure-and-mongodb-with-mongoose)
-- [🔄 Phase 3: Refactoring with Prisma and Migration to PostgreSQL](#-phase-3-refactoring-with-prisma-and-migration-to-postgresql)
-- [🔧 Phase 4: Refactoring to Support Multiple Prisma Clients](#-phase-4-refactoring-to-support-multiple-prisma-clients)
+- [🔄 Phase 3: Refactoring with Prisma](#-phase-3-refactoring-with-prisma)
+- [🔧 Phase 4: Data Model Migration to PostgreSQL and Multi-client Prisma Support](#-phase-4-data-model-migration-to-postgresql-and-multi-client-prisma-support)
+   - [🔗 Data Relationships](#-data-relationships)
 - [🔐 Phase 5: Auth0 Integration](#-phase-5-auth0-integration)
    - [📝 Steps for Auth0 Integration with the Frontend](#-steps-for-auth0-integration-with-the-frontend)
 - [☁️ Phase 6: Cloudinary Integration [EXTRA]](#-phase-6-cloudinary-integration-extra)
 - [ℹ️ Support Resources](#support-resources)
-
-The icons have been added to each section title in the table of contents, and the anchor links should still work correctly. Users can click on the links to navigate to the corresponding sections.
 
 Please note that the table of contents has links to each section, which can be helpful for navigation.
 
@@ -144,86 +143,99 @@ Before getting started, it's important to understand the data we'll be handling 
 7. **Testing the Application**: Use a tool like Postman to send requests to your application and verify that everything is functioning correctly.
 
 
-## 🔄 Phase 3: Refactoring with Prisma and Migration to PostgreSQL
+## 🔄 Phase 3: Refactoring with Prisma
 
-In this phase, your goal is to refactor your backend to use Prisma instead of Mongoose and migrate your data from MongoDB to a PostgreSQL relational database.
+In this phase, your goal is to refactor your backend to use Prisma instead of Mongoose. Prisma is an open-source object-relational mapper (ORM) that makes it easier to work with databases in Node.js and TypeScript applications.
 
 ### Requirements
 
 - Familiarity with Prisma.
-- Basic knowledge of PostgreSQL.
+- Basic knowledge of MongoDB.
 
 ### Steps
 
 1. **Prisma Installation**: Install Prisma in your project using npm.
 
-   ```bash
-   npm install @prisma/cli --save-dev
-   ```
+    ```bash
+    npm install @prisma/cli --save-dev
+    ```
 
-2. **Prisma Configuration**: Configure Prisma for your project. This will include creating a Prisma configuration file (`.env`) and a Prisma schema file (`prisma/schema.prisma`).
+2. **Prisma Configuration**: Configure Prisma for your project. This will include creating a Prisma configuration file (`prisma/.env`) and a Prisma schema file (`prisma/schema.prisma`).
 
-   To initialize Prisma, run the following command:
+   To initiate Prisma, run the following command:
 
-   ```bash
-   npx prisma init
-   ```
+    ```bash
+    npx prisma init
+    ```
 
-3. **Datasource Configuration**: In your **prisma/schema.prisma** file, configure the datasource to use PostgreSQL. Make sure to update the datasource URL with the connection string to your PostgreSQL database.
+3. **Datasource Configuration**: In your `prisma/schema.prisma` file, configure the datasource to use MongoDB. Make sure to update the datasource URL with the connection string to your MongoDB database.
 
-   Here's an example of how this configuration might look like:
+   Here's an example of what this configuration might look like:
 
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
+    ```prisma
+    datasource db {
+      provider = "mongodb"
+      url      = env("DATABASE_URL")
+    }
+    ```
 
-   In this example, **DATABASE_URL** is an environment variable that holds the connection string to your PostgreSQL database. You can define this variable in your **.env** file.
+   In this example, `DATABASE_URL` is an environment variable that contains the connection string to your MongoDB database. You can define this variable in your `.env` file.
 
-4. **Data Model Migration**: Instead of migrating the data directly, we'll migrate the data model. This involves creating a new database schema in PostgreSQL that matches your application's data model. Prisma Migrate is a tool that allows you to do this.
+4. **Prisma Models**: Create Prisma models for movies, users, and genres in the `prisma/schema.prisma` file. These models will define what your data looks like in your database.
 
-   First, define your data model in the prisma/schema.prisma file. Then, you can generate a migration with the following command:
+5. **Prisma Client Generation**: Once you've defined your models, you can generate the Prisma client. The Prisma client is a Node.js module that allows you to access your database.
+      To generate the Prisma client, run the following command:
 
-   ```bash
-   npx prisma migrate dev --name init
-   ```
+    ```bash
+    npm install @prisma/client
+    ```
+   The install command invokes prisma generate for you which reads your Prisma schema and generates a version of Prisma Client that is tailored to your models.
 
-   This command will create a new migration and apply that migration to your database.
+6. **PrismaClient File Creation**: Create a new `prismaClient.ts` file in the `src/db` folder. In this file, import and create a new instance of the Prisma client. This client will be used to interact with your database.
 
-5. **Prisma Models**: Create Prisma models for movies, users, and genres in the prisma/schema.prisma file. These models will define how the data looks in your database.
+   Here's an example of what this file might look like:
 
-6. **Prisma Client Generation**: Once you have defined your models, you can generate the Prisma client. The Prisma client is a Node.js module that allows you to access your database.
+    ```typescript
+    import { PrismaClient } from "@prisma/client";
 
-   To generate the Prisma client, run the following command:
+    const prisma = new PrismaClient();
 
-   ```bash
-   npx prisma generate
-   ```
+    export default prisma;
+    ```
 
-7. **Creation of PrismaClient file**: Create a new prismaClient.ts file in the src/db folder. In this file, import and create a new instance of the Prisma client. This client will be used to interact with your database.
+7. **Controller Refactoring**: Refactor your controllers to use Prisma instead of Mongoose. This will involve changing how you interact with your database.
 
-   Here's an example of how this file might look like:
+8. **Database Synchronization**: After refactoring your controllers, you need to synchronize your Prisma models with your database. You can do this by running the `db push` command:
 
-   ```ts
-   import { PrismaClient } from '@prisma/client';
-   
-   const prisma = new PrismaClient();
-   
-   export default prisma;
-   ```
+    ```bash
+    npx prisma db push
+    ```
 
-8. **Refactoring Controllers**: Refactor your controllers to use Prisma instead of Mongoose. This will involve changing the way you interact with your database.
+   🚨 Whenever you update your Prisma schema, you will need to run the prisma db push command to create new indexes and regenerate Prisma Client. This command will also create the tables in your database if they don't exist yet.
 
-## 🔧 Phase 4: Refactoring to Support Multiple Prisma Clients
+9. **Application Testing**: Use a tool like Postman to send requests to your application and verify that everything is working correctly.
 
-In this phase, your goal is to refactor your backend to be able to use two Prisma clients, one for MongoDB and another one for PostgreSQL. This will allow you to easily switch between different databases according to your needs.
+
+## 🔧 Phase 4: Data Model Migration to PostgreSQL and Multi-client Prisma Support
+
+In this phase, your goal is to migrate your data model from MongoDB to PostgreSQL and add support for multiple Prisma clients. You will also define the relationships between your data entities.
 
 ### Requirements
-
 - Familiarity with Prisma.
-- Basic knowledge of MongoDB and PostgreSQL.
+- Basic knowledge of PostgreSQL and MongoDB.
+- Understanding of one-to-many and many-to-many relationships.
+
+### 🔗 Data Relationships
+In your application, you have three main entities: Users, Movies, and Genres. The relationships between these entities are as follows:
+
+- **Users and Movies**: A user can have many movies, which represents a one-to-many relationship. In the context of a relational database like PostgreSQL, this would typically be represented by a foreign key in the Movies table pointing to the Users table.
+
+- **Movies and Genres**: A movie can have many genres, and a genre can be associated with many movies. This represents a many-to-many relationship. In a relational database, this is typically represented by a join table that includes foreign keys pointing to both the Movies and Genres tables.
+
+### ERD Diagram 
+   Example of the entity-relationship diagram (ERD) that provides a graphical representation of the tables, columns and interrelationships of the database.
+   ![moviehub_relations.png](assets%2Fmoviehub_relations.png)
+
 
 ### Steps
 
@@ -274,8 +286,24 @@ In this phase, your goal is to refactor your backend to be able to use two Prism
 
 5. **Refactoring of controllers**: Refactor your controllers to use the correct instance of the Prisma client, as determined by the `DATA_SOURCE` environment variable.
 
-6. **Testing the application**: Use a tool like Postman to send requests to your application and verify that everything is working correctly.
+6. **Database Synchronization and Migration**: After refactoring your controllers, you need to synchronize your Prisma models with your database. You can do this by running the `db push` command:
 
+    ```bash
+    npx prisma db push
+    ```
+
+   This command updates your database schema to match your Prisma models. It's important to note that `db push` is not recommended for production databases as it can result in data loss. For production databases, consider using Prisma Migrate, which allows you to version control your database schema changes and apply them incrementally.
+
+   To create a migration with Prisma Migrate, run the following commands:
+
+    ```bash
+    npx prisma migrate dev --name init
+    ```
+
+   This command will create a new migration and apply it to your database.
+
+7. **Multi-client Prisma Support**: Add support for multiple Prisma clients in your application. This will allow you to switch between different databases easily.
+8. **Application Testing**: Use a tool like Postman to send requests to your application and verify that everything is working correctly.
 ## 🔐 Phase 5: Auth0 Integration
 
 In this phase, your goal is to integrate Auth0 into your application, both on the backend and frontend. Auth0 is an authentication and authorization service that allows you to protect your routes and manage users in your application.
@@ -331,14 +359,15 @@ In this phase, your goal is to integrate Auth0 into your application, both on th
 
 
 ### 📝 Steps for Auth0 Integration with the Frontend
+1. **Create an Application on Auth0**: Within the Auth0 platform, create a new Application. This Application will represent your frontend and provide you with the keys you need to configure authentication.
 
-1. **Install Auth0 SDK for React**: Install the Auth0 SDK for React in your project using npm.
+2. **Install Auth0 SDK for React**: Install the Auth0 SDK for React in your project using npm.
 
     ```bash
     npm install @auth0/auth0-react
     ```
 
-2. **Configure Auth0 in Your React Application**: Configure Auth0 in your React application. This includes creating an Auth0 configuration file and wrapping your application with the Auth0 provider.
+3. **Configure Auth0 in Your React Application**: Configure Auth0 in your React application. This includes creating an Auth0 configuration file and wrapping your application with the Auth0 provider.
 
    Here's an example of how this configuration could look:
 
@@ -364,7 +393,7 @@ In this phase, your goal is to integrate Auth0 into your application, both on th
     export default App;
     ```
 
-3. **Create Login and Logout Components**: Create components to handle login and logout functionalities. You can use the hooks provided by the Auth0 SDK for React to do this.
+4. **Create Login and Logout Components**: Create components to handle login and logout functionalities. You can use the hooks provided by the Auth0 SDK for React to do this.
 
    Here's an example of how these components could look:
 
@@ -385,7 +414,7 @@ In this phase, your goal is to integrate Auth0 into your application, both on th
    };
    ```
 
-4. **Obtain JWT for Backend Requests**: To make authenticated requests to your backend, you'll need to include the JWT in the headers of your requests. You can obtain this token using the `useAuth0` hook.
+5. **Obtain JWT for Backend Requests**: To make authenticated requests to your backend, you'll need to include the JWT in the headers of your requests. You can obtain this token using the `useAuth0` hook.
 
    Here's an example of how you could do this:
 
@@ -408,6 +437,35 @@ In this phase, your goal is to integrate Auth0 into your application, both on th
      return <div>My component</div>;
    };
    ```
+6. **User Data Handling**: To assign movies to each authenticated user, you can use the `useAuth0` hook in your frontend to get the user's data. This data can then be sent to the backend to determine if the user is new or already exists in your database.
+
+   Here's an example of how you can use the `useAuth0` hook to get the user's data:
+
+    ```tsx
+    import { useAuth0 } from "@auth0/auth0-react";
+    
+    function Component() {
+      const { user, isAuthenticated, isLoading } = useAuth0();
+    
+      if (isLoading) {
+        return <div>Loading...</div>;
+      }
+    
+      if (isAuthenticated) {
+        console.log(user);
+        // Send user data to backend
+      }
+    
+      return <div>Hello {user.name}</div>;
+    }
+    
+    ```
+   ### Note on User Data Management
+   When a user is authenticated with Auth0, you can use the Auth0 hook to get the user's data. This data includes the user's ID, name, and email address, among other details. You can send this data to your backend to check if the user already exists in your database.
+
+   If the user is new, you can create a new user in your database with the data from Auth0. If the user already exists, you can retrieve the user's details from your database. This way, you can associate the authenticated user with their corresponding movies in your application.
+
+
 
 ## ☁️ Phase 6: Cloudinary Integration [EXTRA]
 
