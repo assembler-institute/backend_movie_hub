@@ -5,24 +5,26 @@ Welcome to the MovieHub project, an application to keep track of the movies you 
 
 ![homepage_desktop.png](assets%2Fhomepage_desktop.png)
 
-## Table of Contents
-- [Project Description](#project-description)
-- [Data Model](#data-model)
-   - [Users](#users)
-   - [Movies](#movies)
-   - [Genres](#genres)
-- [Phase 1: Backend with Express, TypeScript, and Node.js](#phase-1-backend-with-express-typescript-and-nodejs)
-- [Phase 2: MVC Structure and MongoDB with Mongoose](#phase-2-mvc-structure-and-mongodb-with-mongoose)
-- [Phase 3: Refactoring with Prisma and Migration to PostgreSQL](#phase-3-refactoring-with-prisma-and-migration-to-postgresql)
-- [Phase 4: Refactoring to Support Multiple Prisma Clients](#phase-4-refactoring-to-support-multiple-prisma-clients)
-- [Phase 5: Auth0 Integration](#phase-5-auth0-integration)
-   - [Steps for Auth0 Integration with the Frontend](#steps-for-auth0-integration-with-the-frontend)
-- [Phase 6: Cloudinary Integration [EXTRA]](#phase-6-cloudinary-integration-extra)
-- [Support Resources](#support-resources)
+Table of Contents:
+- [📋 Project Description](#-project-description)
+- [🗄️ Data Model](#-data-model)
+   - [👤 Users](#-users)
+   - [🎬 Movies](#-movies)
+   - [🏷️ Genres](#-genres)
+- [🚀 Phase 1: Backend with Express, TypeScript, and Node.js](#-phase-1-backend-with-express-typescript-and-nodejs)
+- [🏗️ Phase 2: MVC Structure and MongoDB with Mongoose](#-phase-2-mvc-structure-and-mongodb-with-mongoose)
+- [🔄 Phase 3: Refactoring with Prisma and Migration to PostgreSQL](#-phase-3-refactoring-with-prisma-and-migration-to-postgresql)
+- [🔧 Phase 4: Refactoring to Support Multiple Prisma Clients](#-phase-4-refactoring-to-support-multiple-prisma-clients)
+- [🔐 Phase 5: Auth0 Integration](#-phase-5-auth0-integration)
+   - [📝 Steps for Auth0 Integration with the Frontend](#-steps-for-auth0-integration-with-the-frontend)
+- [☁️ Phase 6: Cloudinary Integration [EXTRA]](#-phase-6-cloudinary-integration-extra)
+- [ℹ️ Support Resources](#support-resources)
+
+The icons have been added to each section title in the table of contents, and the anchor links should still work correctly. Users can click on the links to navigate to the corresponding sections.
 
 Please note that the table of contents has links to each section, which can be helpful for navigation.
 
-## Project Description
+## 📄 Project Description
 
 MovieHub is an application that allows you to manage a list of movies. Each movie in the application has a name, a poster, a score, and a genre. You will be able to perform CRUD (Create, Read, Update, Delete) operations on these movies.
 
@@ -32,11 +34,11 @@ Although the frontend of the application is important for user interaction, the 
 
 This project is an excellent opportunity to learn and practice your backend development skills while building a functional and attractive movie management application. Good luck!
 
-## Data Model
+## 🗄 Data Model
 
 In this project, we will mainly work with three collections or entities: `Users`, `Movies`, and `Genres`. Below, the structure of each of these entities is detailed.
 
-### Users
+### 👤 Users
 
 The `Users` collection stores information about the application users. Each user has the following fields:
 
@@ -46,7 +48,7 @@ The `Users` collection stores information about the application users. Each user
 - `password`: The user's password, securely stored.
 - `movies`: A list of movies that the user has added to their list.
 
-### Movies
+### 🎬 Movies
 
 The `Movies` collection stores information about the movies that users have added to their list. Each movie has the following fields:
 
@@ -56,7 +58,7 @@ The `Movies` collection stores information about the movies that users have adde
 - `score`: The movie's score, assigned by the user when adding the movie to their list.
 - `genre`: The movie's genre, stored as a reference to the corresponding genre document.
 
-### Genres
+### 🏷️ Genres
 
 The `Genres` collection stores the different movie genres that users can select when adding a movie to their list. Each genre has the following fields:
 
@@ -65,7 +67,7 @@ The `Genres` collection stores the different movie genres that users can select 
 
 These are the basic data models that we will use in this project. As you progress in the project, you may find the need to add more fields or entities to support new functionalities. Remember, the goal is to learn and practice, so feel free to experiment and make changes as needed.
 
-## Phase 1: Backend with Express, TypeScript, and Node.js
+## 🚀 Phase 1: Backend with Express, TypeScript, and Node.js
 
 In this first phase, your goal is to set up a backend server using Express, TypeScript, and Node.js.
 
@@ -87,7 +89,7 @@ In this first phase, your goal is to set up a backend server using Express, Type
 5. **Server testing**: Use a tool like Postman to send requests to your server and verify that it is working correctly.
 
 
-## Phase 2: MVC Structure and MongoDB with Mongoose
+## 🏗️ Phase 2: MVC Structure and MongoDB with Mongoose
 
 In this phase, your goal is to structure your backend using the Model-View-Controller (MVC) design pattern and connect your application to MongoDB using Mongoose.
 
@@ -142,7 +144,7 @@ Before getting started, it's important to understand the data we'll be handling 
 7. **Testing the Application**: Use a tool like Postman to send requests to your application and verify that everything is functioning correctly.
 
 
-## Phase 3: Refactoring with Prisma and Migration to PostgreSQL
+## 🔄 Phase 3: Refactoring with Prisma and Migration to PostgreSQL
 
 In this phase, your goal is to refactor your backend to use Prisma instead of Mongoose and migrate your data from MongoDB to a PostgreSQL relational database.
 
@@ -214,7 +216,7 @@ In this phase, your goal is to refactor your backend to use Prisma instead of Mo
 
 8. **Refactoring Controllers**: Refactor your controllers to use Prisma instead of Mongoose. This will involve changing the way you interact with your database.
 
-## Phase 4: Refactoring to Support Multiple Prisma Clients
+## 🔧 Phase 4: Refactoring to Support Multiple Prisma Clients
 
 In this phase, your goal is to refactor your backend to be able to use two Prisma clients, one for MongoDB and another one for PostgreSQL. This will allow you to easily switch between different databases according to your needs.
 
@@ -274,7 +276,7 @@ In this phase, your goal is to refactor your backend to be able to use two Prism
 
 6. **Testing the application**: Use a tool like Postman to send requests to your application and verify that everything is working correctly.
 
-## Phase 5: Auth0 Integration
+## 🔐 Phase 5: Auth0 Integration
 
 In this phase, your goal is to integrate Auth0 into your application, both on the backend and frontend. Auth0 is an authentication and authorization service that allows you to protect your routes and manage users in your application.
 
@@ -328,7 +330,7 @@ In this phase, your goal is to integrate Auth0 into your application, both on th
 
 
 
-### Steps for Auth0 Integration with the Frontend
+### 📝 Steps for Auth0 Integration with the Frontend
 
 1. **Install Auth0 SDK for React**: Install the Auth0 SDK for React in your project using npm.
 
@@ -407,7 +409,7 @@ In this phase, your goal is to integrate Auth0 into your application, both on th
    };
    ```
 
-## Phase 6: Cloudinary Integration [EXTRA]
+## ☁️ Phase 6: Cloudinary Integration [EXTRA]
 
 In this phase, your goal is to integrate Cloudinary into your backend. Cloudinary is a service that allows you to store, transform, and deliver multimedia content, such as images and videos. In the context of your application, you will use it to upload and store movie posters locally.
 
