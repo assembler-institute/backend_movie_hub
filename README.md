@@ -147,6 +147,8 @@ Before getting started, it's important to understand the data we'll be handling 
 
 In this phase, your goal is to refactor your backend to use Prisma instead of Mongoose. Prisma is an open-source object-relational mapper (ORM) that makes it easier to work with databases in Node.js and TypeScript applications.
 
+- 🚨 At this point we are going to leave the work we have done with mongoose in a separate branch, this way we keep that code "saved" and refactor it anyway.
+
 ### Requirements
 
 - Familiarity with Prisma.
