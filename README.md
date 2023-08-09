@@ -299,10 +299,12 @@ In your application, you have three main entities: Users, Movies, and Genres. Th
    To create a migration with Prisma Migrate, run the following commands:
 
     ```bash
-    npx prisma migrate dev --name init
+    npx prisma migrate dev --schema=./prisma/postgres.prisma
     ```
 
    This command will create a new migration and apply it to your database.
+
+🚨 **Important** : Since this multi-client prism support is not standardised and not the conventional way, it is likely that when refactoring the drivers you will get some kind of type error even if the method works, so we are going to use @ts-ignore
 
 7. **Multi-client Prisma Support**: Add support for multiple Prisma clients in your application. This will allow you to switch between different databases easily.
 8. **Application Testing**: Use a tool like Postman to send requests to your application and verify that everything is working correctly.
