@@ -269,21 +269,21 @@ In your application, you have three main entities: Users, Movies, and Genres. Th
     import { PrismaClient as MongoClient } from "../../prisma/generated/mongo_client";
     import { PrismaClient as PostgresClient } from "../../prisma/generated/postgres_client";
 
-    const DATA_SOURCE = process.env.DATA_SOURCE;
+    export const DATA_SOURCE = process.env.DATA_SOURCE ?? "mongo"
    
-    type ClientType = {
-    [key: string]: MongoClient | PostgresClient;
-    };
+    type ClientMongo = MongoClient<Prisma.PrismaClientOptions, never, DefaultArgs>
+    type ClientPostgres = PostgresClient<Prisma.PrismaClientOptions, never, DefaultArgs>
 
     export const mongoClient = new MongoClient();
     export const postgresClient = new PostgresClient();
 
-    const clients: ClientType = {
-      mongo: mongoClient,
-      postgres: postgresClient,
-    };
+    export let prismaClient: any
 
-    export default clients[DATA_SOURCE as keyof  ClientType];
+   if (DATA_SOURCE === "postgres") {
+        prismaClient = postgresClient
+   } else {
+        prismaClient = mongoClient
+   }
     ```
 
 5. **Refactoring of controllers**: Refactor your controllers to use the correct instance of the Prisma client, as determined by the `DATA_SOURCE` environment variable.
