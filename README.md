@@ -19,6 +19,7 @@ Welcome to the MovieHub project, an application to keep track of the movies you 
 - [🔐 Phase 5: Auth0 Integration](#-phase-5-auth0-integration)
    - [📝 Steps for Auth0 Integration with the Frontend](#-steps-for-auth0-integration-with-the-frontend)
 - [☁️ Phase 6: Cloudinary Integration [EXTRA]](#-phase-6-cloudinary-integration-extra)
+- [👩‍🎓👨‍🎓 Evaluation](#-evaluation)
 - [ℹ️ Support Resources](#support-resources)
 
 Please note that the table of contents has links to each section, which can be helpful for navigation.
@@ -549,8 +550,39 @@ In this phase, your goal is to integrate Cloudinary into your backend. Cloudinar
 
 6. **Test the application**: Use a tool like Postman to send requests to your application and verify that everything is working correctly. Make sure to include a file in the requests to the file upload route.
 
+## 👩‍🎓👨‍🎓 Evaluation
 
-## Support Resources
+The final evaluation of the MovieHUB project will be based on the fulfillment of different requirements, such as:
+
+### General
+- On-time delivery
+- Video delivery
+- Explanatory video of less than 16 minutes (between 10 and 15)
+
+### Frontend
+- Folder architecture
+- Integration of Auth0
+- Sending JWT in HTTP requests
+- Proper use of types
+- Code modularization
+- UX/UI Design
+- Documentation(README)[EXTRA]
+- Figma design [EXTRA]
+
+### Backend
+- CRUD of movies
+- MVC folder architecture
+- Mongoose implementation
+- Route protection
+- Multi-Client Prisma implementation
+- Proper use of types
+- Cloudinary integration [EXTRA]
+- Documentation(README)[EXTRA]
+- Environment variables (.env) implementation [EXTRA]
+
+
+
+## 📚Support Resources
 - [Prisma](https://www.prisma.io/)
 - [MongoDB](https://www.mongodb.com/)
 - [PostgreSQL](https://www.postgresql.org/)
